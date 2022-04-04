@@ -1,6 +1,6 @@
 # EscolaWebAPI
 ```
- API de cadastro de alunos e professores feito com Spring MVC, mySQL. 
+ API de cadastro de alunos e professores feito com Spring MVC, mySQL, Thymeleaf.
 ```
 
 # Pré-Requisitos
