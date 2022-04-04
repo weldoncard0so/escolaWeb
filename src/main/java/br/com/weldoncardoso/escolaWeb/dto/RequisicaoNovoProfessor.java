@@ -1,35 +1,23 @@
-package br.com.weldoncardoso.escolaWeb.models;
+package br.com.weldoncardoso.escolaWeb.dto;
 
-import javax.persistence.*;
+import br.com.weldoncardoso.escolaWeb.models.Professor;
+import br.com.weldoncardoso.escolaWeb.models.StatusProfessor;
+
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
-@Entity
-public class Professor {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(nullable = false)
+public class RequisicaoNovoProfessor {
+
+    @NotBlank
+    @NotNull
     private String nome;
+
+    @NotNull
+    @DecimalMin(value = "0.0")
     private BigDecimal salario;
-    @Enumerated(EnumType.STRING)
     private StatusProfessor statusProfessor;
-
-    public Professor() {
-    }
-
-    public Professor(String nome, BigDecimal salario, StatusProfessor statusProfessor) {
-        this.nome = nome;
-        this.salario = salario;
-        this.statusProfessor = statusProfessor;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getNome() {
         return nome;
@@ -55,11 +43,19 @@ public class Professor {
         this.statusProfessor = statusProfessor;
     }
 
+    public Professor toProfessor(){
+        Professor professor = new Professor();
+        professor.setNome(this.nome);
+        professor.setSalario(this.salario);
+        professor.setStatusProfessor(this.statusProfessor);
+
+        return professor;
+    }
+
     @Override
     public String toString() {
-        return "Professor{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
+        return "RequisicaoNovoProfessor{" +
+                "nome='" + nome + '\'' +
                 ", salario=" + salario +
                 ", statusProfessor=" + statusProfessor +
                 '}';
