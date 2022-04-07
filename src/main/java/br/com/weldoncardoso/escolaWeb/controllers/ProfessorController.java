@@ -9,18 +9,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @Controller
+@RequestMapping(value = "/professores")
 public class ProfessorController {
 
     @Autowired
     private ProfessorRepository professorRepository;
 
-    @GetMapping("/professores")
+    @GetMapping("")
     public ModelAndView index(){
         List<Professor> professores = this.professorRepository.findAll();
 
@@ -29,7 +31,7 @@ public class ProfessorController {
         return mv;
     }
 
-    @GetMapping("/professores/novo")
+    @GetMapping("/novo")
     public ModelAndView novo(){
         ModelAndView mv = new ModelAndView("professores/novo");
         mv.addObject("statusProfessor", StatusProfessor.values());
@@ -37,9 +39,10 @@ public class ProfessorController {
         return mv;
     }
 
-    @PostMapping("/professores")
-    public ModelAndView create(@Valid RequisicaoNovoProfessor requisicaoNovoProfessor, BindingResult bindingResult){
+    @PostMapping("")
+    public ModelAndView create(@Valid RequisicaoNovoProfessor requisicao, BindingResult bindingResult){
 
+        System.out.println(requisicao);
         if(bindingResult.hasErrors()){
             System.out.println("\n******************** TEM ERROS ********************\n");
 
@@ -48,9 +51,8 @@ public class ProfessorController {
             return mv;
 
         } else {
-            Professor professor = requisicaoNovoProfessor.toProfessor();
+            Professor professor = requisicao.toProfessor();
             this.professorRepository.save(professor);
-
             return new ModelAndView("redirect:/professores");
         }
     }

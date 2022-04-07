@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 
 public class RequisicaoNovoProfessor {
 
+
     @NotBlank
     @NotNull
     private String nome;
